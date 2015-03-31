@@ -7,7 +7,7 @@
    <supurl >http://www.kroki-mde.net/</>
    <updurl >http://www.kroki-mde.net/downloads</>
    <dlgfont >verdana</>
-   <headlogo >D:\workspace\github\kroki-binaries\images\kroki-icon.gif</>
+   <headlogo >D:\workspace\github\KROKI-binaries\images\kroki-icon.gif</>
    <dlgfontsize >s8</>
    <output >C:\Users\mrd\Desktop</>
    <exename >kroki1.0_-setup.exe</>
@@ -48,7 +48,7 @@
                </>
                <_ id = dlglic disabled = 0 >
                   <desc ></>
-                  <file >D:\workspace\github\kroki-binaries\raw\LICENSE.txt</>
+                  <file >D:\workspace\github\KROKI-binaries\raw\LICENSE.txt</>
                   <print >1</>
                   <iagree >radio</>
                   <buttons >pnc</>
@@ -114,49 +114,49 @@
                         <srclist >
                            <rows >
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\KROKI-1.0.jar</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\KROKI-1.0.jar</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\ApplicationRepository</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\ApplicationRepository</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\libECore</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\libECore</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\mappings</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\icons</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\templates</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\mappings</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\WebApp</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\templates</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\workspace\github\kroki-binaries\raw\SwingApp</>
+                                 <filename >D:\workspace\github\KROKI-binaries\raw\WebApp</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
@@ -229,7 +229,7 @@
                            <path >inst</>
                            <file >KROKI-1.0.jar</>
                            <cmdline ></>
-                           <icon >D:\workspace\github\kroki-binaries\raw\kroki-icon.ico</>
+                           <icon >C:\Kroki MDE Tool\icons\kroki-icon.ico</>
                            <work >inst</>
                            <defwork ></>
                            <if >#make_startmenu#</>
@@ -240,7 +240,7 @@
                            <path >inst</>
                            <file >KROKI-1.0.jar</>
                            <cmdline ></>
-                           <icon >D:\workspace\github\kroki-binaries\raw\kroki-icon.ico</>
+                           <icon >C:\Kroki MDE Tool\icons\kroki-icon.ico</>
                            <work >inst</>
                            <defwork ></>
                            <if >make_desktop</>
@@ -251,7 +251,7 @@
                            <path >inst</>
                            <file >Uninstall.exe</>
                            <cmdline ></>
-                           <icon >D:\workspace\github\kroki-binaries\raw\kroki-icon.ico</>
+                           <icon >C:\Kroki MDE Tool\icons\kroki-icon.ico</>
                            <work >inst</>
                            <defwork ></>
                            <if >#make_startmenu#</>
@@ -265,7 +265,7 @@
                   <path >inst</>
                   <name >KROKI-1.0.jar</>
                   <cmdline ></>
-                  <exticon >D:\workspace\github\kroki-binaries\raw\kroki-icon.ico</>
+                  <exticon >C:\Kroki MDE Tool\icons\kroki-icon.ico</>
                   <extdesc >Kroki model files</>
                   <extfile >krokifiles</>
                   <if >associate_model_files</>
