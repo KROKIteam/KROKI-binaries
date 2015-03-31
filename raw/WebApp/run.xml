@@ -1,0 +1,5 @@
+<project name="WebgApp" default="run">
+    <target name="run">
+        <java dir="${jar.dir}" jar="${jar.dir}/${jar.name}.jar" output="${jar.dir}\log.txt" fork="true"/>
+    </target>
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity class-name="ejb_generated.City" label="City" name="CITY">
+<attributes>
+<column-attribute field-name="id" hidden="true" key="true" label="ID" length="50" name="id" type="java.lang.Long"/>
+<column-attribute field-name="a_name" hidden="false" key="false" label="Name" length="0" name="a_name" precision="0" type="java.lang.String"/>
+<column-attribute field-name="a_zip_code" hidden="false" key="false" label="ZIP Code" length="0" name="a_zip_code" precision="0" type="java.lang.String"/>
+<zoom-attribute class-name="ejb_generated.State" field-name="city_state" label="State" name="city_state" zoomed-by="id">
+<column-ref label="State ID" name="id"/>
+<column-ref label="State Name" name="a_name"/>
+</zoom-attribute>
+</attributes>
+</entity>

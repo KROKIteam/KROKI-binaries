@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map>
+<panel ejb-ref="ejb_generated.City" id="city_st"/>
+<panel ejb-ref="ejb_generated.Department" id="department_st"/>
+<panel ejb-ref="ejb_generated.Enterprise" id="enterprise_st"/>
+<panel ejb-ref="ejb_generated.State" id="state_st"/>
+<panel ejb-ref="ejb_generated.Vendor" id="vendor_st"/>
+<panel ejb-ref="ejb_generated.Invoice" id="invoice_st"/>
+<panel ejb-ref="ejb_generated.Order" id="order_st"/>
+<panel ejb-ref="ejb_generated.OrderItem" id="orderitem_st"/>
+<panel ejb-ref="ejb_generated.PriceList" id="pricelist_st"/>
+<panel ejb-ref="ejb_generated.PriceListItem" id="pricelistitem_st"/>
+<panel ejb-ref="ejb_generated.Category" id="category_st"/>
+<panel ejb-ref="ejb_generated.Product" id="product_st"/>
+<panel ejb-ref="ejb_generated.Stock" id="stock_st"/>
+<panel ejb-ref="ejb_generated.StockKeepingUnit" id="stockkeepingunit_st"/>
+</map>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menus>
+<menu>
+<roles/>
+<submenu>
+<submenu_parent>Menu</submenu_parent>
+<submenu_name>Business entities</submenu_name>
+<menu_item>
+<menu_name>City</menu_name>
+<form_name>City</form_name>
+<activate>city_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Department</menu_name>
+<form_name>Department</form_name>
+<activate>department_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Enterprise</menu_name>
+<form_name>Enterprise</form_name>
+<activate>enterprise_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>State</menu_name>
+<form_name>State</form_name>
+<activate>state_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Vendor</menu_name>
+<form_name>Vendor</form_name>
+<activate>vendor_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+</submenu>
+<submenu>
+<submenu_parent>Menu</submenu_parent>
+<submenu_name>Order management</submenu_name>
+<menu_item>
+<menu_name>Invoice</menu_name>
+<form_name>Invoice</form_name>
+<activate>invoice_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Order</menu_name>
+<form_name>Order</form_name>
+<activate>order_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Order item</menu_name>
+<form_name>Order item</form_name>
+<activate>orderitem_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Items for orders</menu_name>
+<form_name>Items for orders</form_name>
+<activate>Items_for_orders_pc</activate>
+<panel_type>parent-child</panel_type>
+</menu_item>
+</submenu>
+<submenu>
+<submenu_parent>Menu</submenu_parent>
+<submenu_name>Price Lists</submenu_name>
+<menu_item>
+<menu_name>Price list</menu_name>
+<form_name>Price list</form_name>
+<activate>pricelist_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Price list item</menu_name>
+<form_name>Price list item</form_name>
+<activate>pricelistitem_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+</submenu>
+<submenu>
+<submenu_parent>Menu</submenu_parent>
+<submenu_name>Stock management</submenu_name>
+<menu_item>
+<menu_name>Category</menu_name>
+<form_name>Category</form_name>
+<activate>category_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Product</menu_name>
+<form_name>Product</form_name>
+<activate>product_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Stock</menu_name>
+<form_name>Stock</form_name>
+<activate>stock_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+<menu_item>
+<menu_name>Stock keeping unit</menu_name>
+<form_name>Stock keeping unit</form_name>
+<activate>stockkeepingunit_st</activate>
+<panel_type>standard-panel</panel_type>
+</menu_item>
+</submenu>
+</menu>
+</menus>

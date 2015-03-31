@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity class-name="ejb_generated.StockKeepingUnit" label="Stock keeping unit" name="STOCKKEEPINGUNIT">
+<attributes>
+<column-attribute field-name="id" hidden="true" key="true" label="ID" length="50" name="id" type="java.lang.Long"/>
+<column-attribute field-name="a_available" hidden="false" key="false" label="Available" length="0" name="a_available" precision="0" type="java.lang.Boolean"/>
+<zoom-attribute class-name="ejb_generated.Stock" field-name="stockkeepingunit_stock" label="Stock" name="stockkeepingunit_stock" zoomed-by="id">
+<column-ref label="Stock ID" name="id"/>
+<column-ref label="Stock Stock name" name="a_stock_name"/>
+</zoom-attribute>
+</attributes>
+</entity>

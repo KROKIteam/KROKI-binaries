@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity class-name="ejb_generated.Stock" label="Stock" name="STOCK">
+<attributes>
+<column-attribute field-name="id" hidden="true" key="true" label="ID" length="50" name="id" type="java.lang.Long"/>
+<column-attribute field-name="a_stock_name" hidden="false" key="false" label="Stock name" length="0" name="a_stock_name" precision="0" type="java.lang.String"/>
+<column-attribute field-name="a_address" hidden="false" key="false" label="Address" length="0" name="a_address" precision="0" type="java.lang.String:TextArea"/>
+<zoom-attribute class-name="ejb_generated.Department" field-name="stock_department" label="Department" name="stock_department" zoomed-by="id">
+<column-ref label="Department ID" name="id"/>
+<column-ref label="Department Department name" name="a_department_name"/>
+</zoom-attribute>
+</attributes>
+</entity>

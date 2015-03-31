@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity class-name="ejb_generated.OrderItem" label="Order item" name="ORDERITEM">
+<attributes>
+<column-attribute field-name="id" hidden="true" key="true" label="ID" length="50" name="id" type="java.lang.Long"/>
+<column-attribute field-name="a_ordered_quantity" hidden="false" key="false" label="Ordered quantity" length="0" name="a_ordered_quantity" precision="0" type="java.lang.String"/>
+<column-attribute field-name="a_available" hidden="false" key="false" label="Available" length="0" name="a_available" precision="0" type="java.lang.Boolean"/>
+<column-attribute field-name="a_unit_price" hidden="false" key="false" label="Unit price" length="0" name="a_unit_price" precision="0" type="java.math.BigDecimal"/>
+<column-attribute field-name="a_unit_tax" hidden="false" key="false" label="Unit tax" length="0" name="a_unit_tax" precision="0" type="java.math.BigDecimal"/>
+<column-attribute field-name="a_value" hidden="false" key="false" label="Value" length="0" name="a_value" precision="0" type="java.math.BigDecimal"/>
+<zoom-attribute class-name="ejb_generated.Product" field-name="orderitem_product" label="Product" name="orderitem_product" zoomed-by="id">
+<column-ref label="Product ID" name="id"/>
+<column-ref label="Product Product name" name="a_product_name"/>
+</zoom-attribute>
+<zoom-attribute class-name="ejb_generated.Order" field-name="orderitem_order" label="Order" name="orderitem_order" zoomed-by="id">
+<column-ref label="Order ID" name="id"/>
+<column-ref label="Order Order number" name="a_order_number"/>
+</zoom-attribute>
+</attributes>
+</entity>
