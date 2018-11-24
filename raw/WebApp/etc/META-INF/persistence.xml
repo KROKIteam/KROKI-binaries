@@ -1,5 +1,5 @@
 <!-- File generated using KROKI DatabaseConfigGenerator class -->
-<!-- Creation time and date: 31.03.2015  13:14 -->
+<!-- Creation time and date: 24.11.2018  17:20 -->
 
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
    <persistence-unit name="adapt" transaction-type="RESOURCE_LOCAL">
@@ -12,7 +12,7 @@
 			<property name="hibernate.connection.username" value="test" />
 			<property name="hibernate.connection.password" value="test" />
 	        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-		  	<property name="hibernate.hbm2ddl.auto" value="create"/>
+		  	<property name="hibernate.hbm2ddl.auto" value="update"/>
 		  	<property name="hibernate.connection.useUnicode" value="true" />
 			<property name="hibernate.connection.characterEncoding" value="UTF-8" />
 			<property name="hibernate.show_sql" value="true" />

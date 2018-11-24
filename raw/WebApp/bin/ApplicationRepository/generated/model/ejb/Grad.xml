@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entity class-name="ejb_generated.Grad" label="Grad" name="GRAD">
+<attributes>
+<column-attribute field-name="id" hidden="true" key="true" label="ID" length="50" mandatory="true" name="id" type="java.lang.Long"/>
+<column-attribute field-name="ka_naziv" hidden="false" key="false" label="Naziv" length="0" mandatory="false" name="ka_naziv" precision="0" type="java.lang.String"/>
+<zoom-attribute class-name="ejb_generated.Drzava" field-name="grad_drzava" label="Drzava" name="grad_drzava" zoomed-by="id">
+<column-ref label="Drzava ID" name="id"/>
+<column-ref label="Drzava Naziv" name="ka_naziv"/>
+</zoom-attribute>
+</attributes>
+</entity>

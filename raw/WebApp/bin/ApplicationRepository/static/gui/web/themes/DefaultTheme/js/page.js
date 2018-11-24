@@ -10,7 +10,6 @@
 	https://github.com/KROKIteam
  *****************************************************************/
  $(document).ready(function(e) {
-
 	//number of miliseconds that popup messages are being visible for
 	var delay = 2000;
 	//speed of fade out and fade in effects
@@ -143,7 +142,8 @@
         var label = $(this).attr("data-label");
         var panelType = $(this).attr("data-paneltype");
         var showback = false;
-        resourceId = $(this).attr("data-activate");
+        var next = false;
+        var resourceId = $(this).attr("data-activate");
 
         //ACTIVATOR SPECIFIC OPERATIONS:
         //if activator is menu item, return menu to inital state
@@ -163,12 +163,15 @@
             var selectedRow = tableDiv.find(".mainTable tbody tr.selectedTr");
             var returnTo = null;
             var zoomName = null;
-            resourceId = $(this).attr("data-resourceId");
+            var next = true;
+            var parentId = form.attr("data-resourceid");
 
+            resourceId = $(this).attr("data-resourceId");
             if(selectedRow.length > 0) {
                 var id = selectedRow.find("#idCell").text();
                 activate = $(this).attr("data-activate") + "/" + id;
                 panelType = "next-panel";
+
             }else {
 				// If nothing is selected, show unfiltered data in new form
 				label = $(this).attr("data-labelClean");
@@ -189,7 +192,13 @@
         }
 
         //finally, pass data to method that creates forms
-        makeNewWindow(activate, label, panelType, showback, returnTo, zoomName, resourceId);
+        var newWindow = makeNewWindow(activate, label, panelType, showback, returnTo, zoomName, resourceId);
+        if(next) {
+        	var newForm = newWindow.find("div.standardForms");
+        	if(newForm.length > 0) {
+        		syncZoomWithParentTable(form, newForm);
+        	}
+        }
     });
 
 	//CLOSE FORM ON 'X' BUTTON CLICK
@@ -284,11 +293,14 @@
 			updateBounds(newWindowBody);
 		});
 
+		var winCount = $(".windows").length + 1;
+		newWindow.css({top: winCount*50, left: winCount*50});
+
 		container.append(newWindow);
 		//if the form that needs to ne displayed is parent-child form
 		//get containing panels with ajax call to /getInfo/panelName
 		//and get data for each form by envoking standard panel ajax call to server
-		if(panelType == "parent-child") {
+		if(panelType == "PARENTCHILDPANEL") {
 			//get JSON data from server
 			$.getJSON("/getInfo/" + resourceId, function(data) {
 				//Create <div> element for each contained panel
@@ -300,12 +312,19 @@
                     newStandardForm.addClass("standardForms");
                     newStandardForm.attr("data-activate", "/show/" + activate);
                     newStandardForm.attr("data-assocend", associationEnd);
-                    newStandardForm.css({"height": (90/data.panels.length) + "%"});
+                    newStandardForm.css({"height": (100/data.panels.length) + "%"});
                     newStandardForm.attr("data-resourceId", activate);
 
                     newWindowBody.append(newStandardForm);
                     loadDataToForm(newStandardForm, true, false);
                     updateBounds(newWindowBody);
+
+                    $(".datepicker").datepicker({
+                        changeMonth: true,
+                        changeYear:  true,
+                        dateFormat:  "dd.mm.yy.",
+                        yearRange:   "1900:2100"
+                    });
 
 					var newHeight = (data.panels.length) * 200;
 					if(newHeight < $("#container").height()) {
@@ -332,6 +351,7 @@
         }
 
         forms = newWindow.find("div.standardForms").length;
+
         if(forms > 2) {
             var newHeight = forms*200;
             if(newHeight < $("#container").height()) {
@@ -345,6 +365,7 @@
             }
         }
         updateBounds(newWindowBody);
+        return newWindow;
     }
 
 	/**************************************************************************************************************************
@@ -374,29 +395,34 @@
             var assocEnd = childForm.attr("data-assocend");
 			//call server method only if child form exists below this form
 			if(childForm.length > 0) {
-                $.ajax({
-                    url: "/showChildren/" +  childId  + "/" + assocEnd + "/" + rowId,
-                    type: 'GET',
-                    encoding:"UTF-8",
-                    contentType: "text/html; charset=UTF-8",
-                    success: function(data) {
-                        childForm.html(data);
-                        childForm.find("button#btnZoomBack").remove();
-                        var firstRow = childForm.find(".mainTable tbody tr:first-child");
-                        if(firstRow.length > 0) {
-                            firstRow.trigger("click");
-                        }else {
-                          childForm.next().find(".tablePanel").empty();
-                      }
-                      updateBounds(childForm);
-                      },
-                      error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                        $("#messagePopup").html("<p>" + errorThrown + "</p>");
-                        $("#messagePopup").attr("class", "messageError");
-                        $("#messagePopup").prepend("<div></div>");
-                        $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
-                    }
-                });
+				var childInputForm = childForm.find("form.inputForm");
+				syncZoomWithParentTable(form, childForm);
+				if(!childInputForm.is(':visible')) {
+					// if table is visible, fetch filtered content
+					$.ajax({
+	                    url: "/showChildren/" +  childId  + "/" + assocEnd + "/" + rowId,
+	                    type: 'GET',
+	                    encoding:"UTF-8",
+	                    contentType: "text/html; charset=UTF-8",
+	                    success: function(data) {
+	                        childForm.html(data);
+	                        childForm.find("button#btnZoomBack").remove();
+	                        var firstRow = childForm.find(".mainTable tbody tr:first-child");
+	                        if(firstRow.length > 0) {
+	                            firstRow.trigger("click");
+	                        }else {
+	                          childForm.next().find(".tablePanel").empty();
+	                      }
+	                      updateBounds(childForm);
+	                      },
+	                      error: function(XMLHttpRequest, textStatus, errorThrown) { 
+	                        $("#messagePopup").html("<p>" + errorThrown + "</p>");
+	                        $("#messagePopup").attr("class", "messageError");
+	                        $("#messagePopup").prepend("<div></div>");
+	                        $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+	                    }
+	                });
+				}
             }
         }
     });
@@ -459,6 +485,10 @@
 				form.find(".inputForm[name=addForm]").show();
 				form.fadeIn(fadeSpeed);
 			});
+		}
+		var parentForm = form.prev('.standardForms');
+		if(parentForm.length > 0) {
+			syncZoomWithParentTable(parentForm, form);
 		}
 	});
 
@@ -562,6 +592,10 @@
 			form.find(".operationsDiv").hide();
 			form.find(".inputForm[name=addForm]").show();
 			form.fadeIn("slow");
+			var parentForm = form.prev('.standardForms');
+			if(parentForm.length > 0) {
+				syncZoomWithParentTable(parentForm, form);
+			}
 		});
 	});
 
@@ -586,34 +620,107 @@
 	$("#cconfirmBtn").click(function(e) {
 		$("#overlay").hide();
 		var link = $(this).closest("#confirmDialog").attr("data-confirmLink");
-		if(link != "justClose") {
-			$.ajax({
-				url: link,
-				type: 'GET',
-				encoding:"UTF-8",
-				contentType: "text/html; charset=UTF-8",
-				success: function(data) {
-					$("#messagePopup").html(data);
-					var clas = $("#messagePopup").find("p").attr("data-cssClass");
-					$("#messagePopup").attr("class", clas);
-					$("#messagePopup").prepend("<div></div>");
-					$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
-					refreshFormData(formToRefresh);
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					$("#messagePopup").html("<p>" + errorThrown + "</p>");
-					$("#messagePopup").attr("class", "messageError");
-					$("#messagePopup").prepend("<div></div>");
-					$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
-				}
-			});
+		var params = "?names="
+		if(link == "printForm") {
+			var confirmDialog = $(this).closest("#confirmDialog");
+			var resourceid = $("#confirmDialog").attr("data-resourceid");
+			if($('#confirmDialog input:checkbox:checked').length > 0) {
+				$('#confirmDialog input:checkbox:checked').each(function() {
+					params += $(this).attr("name") + ";"
+				});
+				link += params + "&resource=" + resourceid;
+				$.ajax({
+					url: link,
+					type: 'GET',
+					encoding:"UTF-8",
+					contentType: "text/html; charset=UTF-8",
+					success: function(data) {
+						console.log("RESPONSE: " + data)
+						$("#messagePopup").html(data);
+						var clas = $("#messagePopup").find("p").attr("data-cssClass");
+						$("#messagePopup").attr("class", clas);
+						$("#messagePopup").prepend("<div></div>");
+						$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+						var pdfURI = ""
+						window.open('/static/' + resourceid + '.pdf', '_blank');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						$("#messagePopup").html("<p>" + errorThrown + "</p>");
+						$("#messagePopup").attr("class", "messageError");
+						$("#messagePopup").prepend("<div></div>");
+						$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+					}
+				});
+			}else {
+				alert("Please select at least one column to print.")
+			}
+		}else {
+			if(link != "justClose") {
+				$.ajax({
+					url: link,
+					type: 'GET',
+					encoding:"UTF-8",
+					contentType: "text/html; charset=UTF-8",
+					success: function(data) {
+						$("#messagePopup").html(data);
+						var clas = $("#messagePopup").find("p").attr("data-cssClass");
+						$("#messagePopup").attr("class", clas);
+						$("#messagePopup").prepend("<div></div>");
+						$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+						refreshFormData(formToRefresh);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						$("#messagePopup").html("<p>" + errorThrown + "</p>");
+						$("#messagePopup").attr("class", "messageError");
+						$("#messagePopup").prepend("<div></div>");
+						$("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+					}
+				});
+			}
 		}
 	});
 
-	function showConfirmDialog(name, confirmLink, text) {
+	function showConfirmDialog(name, confirmLink, text, form) {
 		$("#confirmDialog .windowName").text(name);
 		$("#confirmDialog").attr("data-confirmLink", confirmLink);
+		$("#confirmDialog p").empty();
 		$("#confirmDialog p").text(text);
+		// DEFAULT PRINT FORM
+		// Show check boxes for columns that need to be printed
+		if (typeof form !== "undefined" && confirmLink == "printForm") {
+		    var printContainer = $(document.createElement("div"));
+		    $("#confirmDialog").attr("data-resourceid", form.attr("data-resourceid"));
+
+		    form.find(".inputFormFields tr").each(function() {
+		    	var label = $(this).find('td.labelColumn').text();
+		    	var name = $(this).find('*[name]:first').attr('name');
+
+		    	var checkboxLabel = $(document.createElement("label"));
+		    	var printCheckBox = $(document.createElement("input"));
+		    	printCheckBox.addClass("printCheckBox");
+		    	printCheckBox.attr("type", "checkbox");
+		    	printCheckBox.attr("name", name);
+		    	printCheckBox.attr("id", name);
+		    	printCheckBox.attr("value", name);
+		    	printCheckBox.attr("checked", "checked");
+
+		    	var checkboxLabel = $(document.createElement("label"));
+		    	checkboxLabel.addClass("printLabel");
+		    	checkboxLabel.attr("for", name);
+		    	checkboxLabel.text(label);
+		    	printContainer.append(printCheckBox);
+		    	printContainer.append(checkboxLabel);
+		    });
+		    var count = printContainer.find("input").length;
+		    if(count > 3) {
+		    	$("#confirmDialog").css({height: (42 * count + 35) + "px"});
+		    }else {
+		    	$("#confirmDialog").css({height: "185px"});
+		    }
+		    $("#confirmDialog p").append(printContainer);
+		}else {
+			$("#confirmDialog").css({height: "170px"});
+		}
 		$("#overlay").show();
 	}
 
@@ -638,8 +745,8 @@
                     // Get visible input since, one is always hidden, depending on which form is in use (add or edit)
                     var zoomInput = caller.find("#" + zoomName + ":visible"); 
                     
-                    console.log("Menjam     :" + zoomInput.attr("id") + " iz " + zoomInput.closest("form.inputForm").attr("name"));
-                    console.log(zoomInput.val() + " --> " + zoomValue);
+                    // console.log("Menjam     :" + zoomInput.attr("id") + " iz " + zoomInput.closest("form.inputForm").attr("name"));
+                    // console.log(zoomInput.val() + " --> " + zoomValue);
                     zoomInput.val(zoomValue);
                 }
             });
@@ -651,7 +758,8 @@
 		var name = $(this).text();
 		var link = $(this).attr("data-confirmLink");
 		var text = $(this).attr("data-confirmText");
-		showConfirmDialog(name, link, text);
+		var form = $(this.closest(".standardForms"));
+		showConfirmDialog(name, link, text, form);
 	});
 
 	/**************************************************************************************************************************
@@ -671,39 +779,81 @@
     });
 
     container.on("click", "#button-ok", function(e) {
-        e.preventDefault();
+    	e.preventDefault();
         var form = $(this).closest(".inputForm");
         var act = form.attr('action');
         var method = form.attr('method');
-        $.ajax({
-            type: method,
-            url: act,
-            data: form.serialize(),
-            encoding:"UTF-8",
-            contentType: "text/html; charset=UTF-8",
-            success: function (data) {
-                $("#messagePopup").html(data);
-                var clas = $("#messagePopup").find("p").attr("data-cssClass");
-                $("#messagePopup").attr("class", clas);
-                $("#messagePopup").prepend("<div></div>");
-                $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
-                if(clas == "messageOk") {
-                    if(form.attr("name") == "addForm") {
-                        form.trigger("reset");
-                        form.find(".inputFormFields tr:first-child input").focus();
-                    }
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                $("#messagePopup").html("<p>" + errorThrown + "</p>");
-                $("#messagePopup").attr("class", "messageError");
-                $("#messagePopup").prepend("<div></div>");
-                $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
-            }
-        });
+
+        if(form[0].checkValidity() === false) {
+	      	$("#messagePopup").html("<p>Please fill all required fields.</p>");
+	      	$("#messagePopup").attr("class", "messageError");
+	        $("#messagePopup").prepend("<div></div>");
+	        $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+	    }else {
+	    	$.ajax({
+	            type: method,
+	            url: act,
+	            data: form.serialize(),
+	            encoding:"UTF-8",
+	            contentType: "text/html; charset=UTF-8",
+	            success: function (data) {
+	                $("#messagePopup").html(data);
+	                var clas = $("#messagePopup").find("p").attr("data-cssClass");
+	                $("#messagePopup").attr("class", clas);
+	                $("#messagePopup").prepend("<div></div>");
+	                $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+	                if(clas == "messageOk") {
+	                    if(form.attr("name") == "addForm") {
+	                        form.trigger("reset");
+	                        form.find(".inputFormFields tr:first-child input").focus();
+	                    }
+	                }
+	            },
+	            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+	                $("#messagePopup").html("<p>" + errorThrown + "</p>");
+	                $("#messagePopup").attr("class", "messageError");
+	                $("#messagePopup").prepend("<div></div>");
+	                $("#messagePopup").slideToggle(300).delay(delay).slideToggle(500);
+	            }
+	        });	
+	    }
+        
     });
 });
 //---------------------------------------------------------------------//           UTIL FUNCTIONS
+
+	// Synchronize child zooom values with the selected row in the parent table
+    function syncZoomWithParentTable(parentForm, childForm) {
+    	if(parentForm.find("tr.selectedTr").length > 0) {
+    		var parentId = parentForm.attr("data-resourceId");
+    		console.log("PARENT ID: " + parentId);
+	    	if(childForm != null) {
+	    		if(childForm.length > 0) {
+		    		// Zoom field consists of a zoom button and input fields for each
+		    		// representative attribute of parent entity.
+		    		// Zoom button contains info about parent id in the 'data-activate' attribute
+		    		var childInputForm = childForm.find("div.tableDiv");
+		    		console.log(childInputForm);
+					var zoomButton = childForm.find("button[data-activate='" + parentId + "']");
+					if(zoomButton.length > 0) {
+						// Once we have found the zoom button, iterate over it's zoom fields and populate it
+						// Each zoom input filed's id attribute conforms with the 'data-attrname' attribute
+						// Of a cell in the parent form table which holds the designated attribute value.
+						zoomButton.siblings('input.zoomInputs').each(function() {
+							var zoomId = $(this).attr("id");
+							// We need to strip the prefix from the id to obtain a clear attribute name
+							zoomId = zoomId.substring(zoomId.lastIndexOf('-') + 1);
+							// Then fetch the value from the cell in the selected row and set the value od a zoom field
+							var zoomVal = parentForm.find("tr.selectedTr td[data-attrname='" + zoomId + "']").text();
+							$(this).attr('value', zoomVal);
+						});
+					}else {
+						console.log("No zoom button!");
+					}
+				}
+	    	}
+    	}
+    }
 
     /*
      * Fetches the data from server to form element
@@ -714,6 +864,7 @@
         $.ajax({
             url: activateLink,
             type: 'GET',
+            async: false,
             encoding:"UTF-8",
             contentType: "text/html; charset=UTF-8",
             success: function(data) {
@@ -744,7 +895,8 @@
 				 */
 				newWindow = form.closest(".windows");
 		        var columns = newWindow.find("th").length;
-		        if(columns > 6) {
+		        var siblings = newWindow.find(".standardForms").length;
+                if(columns > 6) {
 		            var newWidth = columns*200;
 		            if(newWidth<$("#container").width()) {
 		                newWindow.width(newWidth);
@@ -758,6 +910,11 @@
 		               });
 		            }
 		        }
+
+                if(siblings > 1) {
+                    form.find(".operationsDiv").css("max-height", "100%");
+                }
+                console.log("DATA LOADED!")
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
         	   window.remove();
@@ -786,23 +943,25 @@
      * Refresh form data from database
      */
     function refreshFormData(form) {
-        var win = form.closest("div.windows");
-        form.fadeOut("fast", function() {
-            var showTitle = false;
-            var showback = false;
-            if((win.find(".standardForms").length) > 1) {
-               showTitle =  true;
-            }
-            if((form.find("button#btnZoomBack").length) > 0) {
-               showback =  true;
-            }
-            loadDataToForm(form, showTitle, showback);
-            $(this).fadeIn("fast", function(e) {
-               if(form.next().length > 0) {
-                    refreshFormData(form.next());
-                }
-            });
-        });
+        if(typeof form !== "undefined") {
+        	var win = form.closest("div.windows");
+	        form.fadeOut("fast", function() {
+	            var showTitle = false;
+	            var showback = false;
+	            if((win.find(".standardForms").length) > 1) {
+	               showTitle =  true;
+	            }
+	            if((form.find("button#btnZoomBack").length) > 0) {
+	               showback =  true;
+	            }
+	            loadDataToForm(form, showTitle, showback);
+	            $(this).fadeIn("fast", function(e) {
+	               if(form.next().length > 0) {
+	                    refreshFormData(form.next());
+	                }
+	            });
+	        });
+        }
     }
 
     //Updates the bounds of fixed table headers and main navigation dimensions on resize and scroll events

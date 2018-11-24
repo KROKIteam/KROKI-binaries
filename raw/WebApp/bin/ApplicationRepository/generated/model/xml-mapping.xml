@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <map>
-<property class-name="ejb_generated.City" xml-file="ejb/City"/>
-<property class-name="ejb_generated.Department" xml-file="ejb/Department"/>
-<property class-name="ejb_generated.Enterprise" xml-file="ejb/Enterprise"/>
-<property class-name="ejb_generated.State" xml-file="ejb/State"/>
-<property class-name="ejb_generated.Vendor" xml-file="ejb/Vendor"/>
-<property class-name="ejb_generated.Invoice" xml-file="ejb/Invoice"/>
-<property class-name="ejb_generated.Order" xml-file="ejb/Order"/>
-<property class-name="ejb_generated.OrderItem" xml-file="ejb/OrderItem"/>
-<property class-name="ejb_generated.PriceList" xml-file="ejb/PriceList"/>
-<property class-name="ejb_generated.PriceListItem" xml-file="ejb/PriceListItem"/>
-<property class-name="ejb_generated.Category" xml-file="ejb/Category"/>
-<property class-name="ejb_generated.Product" xml-file="ejb/Product"/>
-<property class-name="ejb_generated.Stock" xml-file="ejb/Stock"/>
-<property class-name="ejb_generated.StockKeepingUnit" xml-file="ejb/StockKeepingUnit"/>
+<property class-name="ejb_generated.Drzava" xml-file="ejb/Drzava"/>
+<property class-name="ejb_generated.Grad" xml-file="ejb/Grad"/>
 </map>

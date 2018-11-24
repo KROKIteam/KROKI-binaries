@@ -1,79 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <panels>
 <standard-panels>
-<standard-panel ejb-ref="ejb_generated.City" id="city_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-<nexts>
-<next label="Orders" name="orders" panel-ref="order_st" panel-type="STANDARDPANEL"/>
-</nexts>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Department" id="department_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-<operations>
-<operation allowed="true" label="Orders" name="Orders" target="null" type="report"/>
-<operation allowed="true" label="Invoices" name="Invoices" target="null" type="report"/>
-</operations>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Enterprise" id="enterprise_st">
+<standard-panel ejb-ref="ejb_generated.Drzava" id="drzava_st">
 <settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
 </standard-panel>
-<standard-panel ejb-ref="ejb_generated.State" id="state_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Vendor" id="vendor_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Invoice" id="invoice_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Order" id="order_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-<nexts>
-<next label="Items" name="items" panel-ref="orderitem_st" panel-type="STANDARDPANEL"/>
-</nexts>
-<operations>
-<operation allowed="true" label="Finish" name="Finish" target="null" type="transaction"/>
-<operation allowed="true" label="Create invoice" name="Create_invoice" target="null" type="transaction"/>
-<operation allowed="true" label="Cancel" name="Cancel" target="null" type="transaction"/>
-</operations>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.OrderItem" id="orderitem_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.PriceList" id="pricelist_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-<nexts>
-<next label="Items" operationgroup="Operations"/>
-</nexts>
-<operations>
-<operation allowed="true" label="Copy" name="Copy" target="null" type="transaction"/>
-<operation allowed="true" label="Last year" name="Last_year" operationgroup="Reports" target="null" type="report"/>
-<operation allowed="true" label="Current" name="Current" operationgroup="Reports" target="null" type="report"/>
-<operation allowed="true" label="Close" name="Close" operationgroup="Operations" target="null" type="transaction"/>
-</operations>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.PriceListItem" id="pricelistitem_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Category" id="category_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Product" id="product_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.Stock" id="stock_st">
-<settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
-</standard-panel>
-<standard-panel ejb-ref="ejb_generated.StockKeepingUnit" id="stockkeepingunit_st">
+<standard-panel ejb-ref="ejb_generated.Grad" id="grad_st">
 <settings add="true" change-mode="true" data-navigation="true" delete="true" view-mode="panel"/>
 </standard-panel>
 </standard-panels>
-<parent-child-panels>
-<parent-child id="Items_for_orders_pc" label="Items for orders">
-<panel id="City" level="1" panel-ref="city_st"/>
-<panel association-end="City" id="Order" level="2" panel-ref="order_st"/>
-<panel association-end="Order" id="OrderItem" level="3" panel-ref="orderitem_st"/>
-</parent-child>
-</parent-child-panels>
+<parent-child-panels/>
 <many-to-many-panels/>
 </panels>
